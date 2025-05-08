@@ -7,4 +7,4 @@ files:
 hooks:
   AfterInstall:
     - location: deploy.sh
-      runas: ubuntu
+      runas: root
