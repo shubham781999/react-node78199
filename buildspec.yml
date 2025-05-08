@@ -5,13 +5,17 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - cd frontend
-      - npm install
+      - echo "Current Directory:"
+      - pwd
+      - echo "Listing files:"
+      - ls -l
+      - if [ -d "frontend" ]; then cd frontend && npm install; else echo "Frontend directory not found"; exit 1; fi
       - cd ../backend
       - npm install
 
   build:
     commands:
+      - echo "Building frontend..."
       - cd frontend
       - npm run build
       - cd ../backend
