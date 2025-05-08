@@ -22,6 +22,6 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
-  base-directory: backend
-  discard-paths: yes
+    - '**/*'  # Include all files in the repo, including appspec.yml
+  base-directory: ./  # Make sure it's the root of the repo where appspec.yml is located
+  discard-paths: no    # Keep the directory structure intact (important for deployment)
