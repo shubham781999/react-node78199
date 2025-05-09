@@ -17,7 +17,7 @@ function Contact() {
     }, [])
 
     const axiosFetchData = async (processing) => {
-        await axios.get('http://13.233.15.16:4000/users')
+        await axios.get('http://13.234.232.150:4000/users')
             .then(res => {
                 if (processing) {
                     setSelectData(res.data)
@@ -33,7 +33,7 @@ function Contact() {
             message: message
         }
 
-        await axios.post('http://13.233.15.16:4000/contact/send', postData)
+        await axios.post('http://13.234.232.150:4000/contact/send', postData)
             .then(res => setError(<p className="success">{res.data}</p>))
             .catch(err => {
                 if (err.response) {
