@@ -5,23 +5,20 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo "Installing frontend dependencies..."
-      - cd frontend
+      - cd backend
       - npm install
-      - cd ../backend
-      - echo "Installing backend dependencies..."
+      - cd ../frontend
       - npm install
 
   build:
     commands:
-      - echo "Building frontend..."
-      - cd ../frontend
+      - cd frontend
       - npm run build
-      - cd ../backend
-      - echo "Build phase completed"
+      - cd ..
 
 artifacts:
   files:
-    - '**/*'  # Include all files in the repo, including appspec.yml
-  base-directory: ./  # Make sure it's the root of the repo where appspec.yml is located
-  discard-paths: no    # Keep the directory structure intact (important for deployment)
+    - frontend/build/**/*  # Frontend build artifacts
+    - backend/**/*          # Backend files
+    - appspec.yml
+    - scripts/**/*          # Deployment scripts
