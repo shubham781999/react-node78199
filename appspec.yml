@@ -1,10 +1,39 @@
 version: 0.0
+
 os: linux
+
 files:
-  - source: /
-    destination: /var/www/react-node78199
+  - source: /frontend/build/
+    destination: /var/www/html  # Nginx/Apache web root for frontend
+
+  - source: /backend/
+    destination: /app/backend
+
+permissions:
+  - object: /var/www/html
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+
+  - object: /app/backend
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 
 hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: root
+
   AfterInstall:
-    - location: deploy.sh
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
       runas: root
