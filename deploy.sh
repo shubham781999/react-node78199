@@ -18,11 +18,20 @@ fi
 
 # Frontend build
 cd $FRONTEND_DIR
+echo "Cleaning frontend dependencies..." | tee -a $LOG_FILE
+rm -rf node_modules package-lock.json >> $LOG_FILE 2>&1
+
 echo "Installing frontend dependencies..." | tee -a $LOG_FILE
-npm install >> $LOG_FILE 2>&1
+if ! npm install >> $LOG_FILE 2>&1; then
+    echo "Frontend npm install failed" | tee -a $LOG_FILE
+    exit 1
+fi
 
 echo "Building frontend..." | tee -a $LOG_FILE
-npm run build >> $LOG_FILE 2>&1
+if ! npm run build >> $LOG_FILE 2>&1; then
+    echo "Frontend build failed" | tee -a $LOG_FILE
+    exit 1
+fi
 
 echo "Copying frontend build..." | tee -a $LOG_FILE
 mkdir -p /var/www/react-node78199/frontend/build/
@@ -31,7 +40,10 @@ cp -R build/* /var/www/react-node78199/frontend/build/
 # Backend setup
 cd $BACKEND_DIR
 echo "Installing backend dependencies..." | tee -a $LOG_FILE
-npm install >> $LOG_FILE 2>&1
+if ! npm install >> $LOG_FILE 2>&1; then
+    echo "Backend npm install failed" | tee -a $LOG_FILE
+    exit 1
+fi
 
 echo "Restarting backend service..." | tee -a $LOG_FILE
 pm2 delete all || true
