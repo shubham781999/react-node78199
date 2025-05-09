@@ -12,7 +12,6 @@ phases:
 
   build:
     commands:
-      - cd frontend
       - npm run build
       - cd ..
 
