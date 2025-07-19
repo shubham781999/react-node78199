@@ -2,11 +2,12 @@ version: 1.0
 runtime: nodejs18
 
 build:
-  command: |
-    cd backend
-    npm install
+  commands:
+    - cd backend
+    - npm install
 
 run:
   command: node backend/index.js
-  network:
-    port: 3000
+
+network:
+  port: 3000
